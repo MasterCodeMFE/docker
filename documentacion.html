@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos de Docker y Guía Completa</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #2b2b2b; /* Color de fondo más suave */
+            color: #ffffff;
+            font-size: 18px; /* Tamaño de fuente para mejor legibilidad */
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Centra el contenido */
+        }
+    
+        h1 {
+            color: #ffffff;
+            margin-bottom: 30px;
+            font-size: 2.5em; /* Aumenta el tamaño del título principal */
+            text-align: center; /* Centra el título */
+        }
+    
+        h2, h3 {
+            color: #ffffff;
+            margin-bottom: 15px;
+            text-align: left; /* Alinea h2 y h3 a la izquierda */
+            width: 100%; /* Asegura que ocupen todo el ancho */
+        }
+    
+        button {
+            width: 100%;
+            max-width: 400px; /* Máximo ancho para los botones */
+            padding: 15px;
+            background-color: #007BFF; /* Azul brillante */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2em; /* Tamaño de fuente del botón */
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: background-color 0.3s, transform 0.3s; /* Transición suave */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra para profundidad */
+            text-align: center; /* Centra el texto en el botón */
+        }
+    
+        button:hover {
+            background-color: #0056b3; /* Color al pasar el ratón */
+            transform: translateY(-2px); /* Efecto de elevación */
+        }
+    
+        input {
+            width: 100%;
+            max-width: 400px; /* Máximo ancho para inputs */
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #007BFF; /* Borde azul brillante */
+            border-radius: 5px;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            font-size: 1.2em; /* Tamaño de fuente del input */
+        }
+    
+        input::placeholder {
+            color: #aaaaaa;
+        }
+    
+        table {
+            width: 100%;
+            max-width: 800px; /* Máximo ancho para la tabla */
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #333333; /* Color de fondo más oscuro para la tabla */
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            font-size: 1em; /* Tamaño de fuente para la tabla */
+            margin: 0 auto; /* Centra la tabla */
+            text-align: center; /* Centra el texto en la tabla */
+        }
+    
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #444;
+        }
+    
+        th {
+            background-color: #007BFF; /* Azul brillante para encabezados */
+            color: white;
+            font-size: 1.2em; /* Tamaño de fuente de los encabezados */
+        }
+    
+        tr {
+            transition: background-color 0.3s;
+        }
+    
+        tr:nth-child(even) {
+            background-color: #2a2a2a; /* Color de fondo para filas pares */
+        }
+    
+        tr:hover {
+            background-color: #555; /* Color de fondo al pasar el ratón */
+        }
+    
+        .options {
+            margin: 5px 0; /* Espaciado entre opciones */
+        }
+    
+        .hidden {
+            display: none;
+        }
+    
+        #tutorial {
+            display: none; /* Oculta el tutorial por defecto */
+            background-color: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            margin-bottom: 20px;
+            text-align: left; /* Alinea el texto a la izquierda */
+            width: 100%; /* Asegura que ocupe todo el ancho */
+            max-width: 800px; /* Máximo ancho para el tutorial */
+        }
+    
+        .highlight {
+            background-color: #ffeb3b; /* Resalta coincidencias */
+        }
+    
+        .content {
+            display: none; /* Oculta todo el contenido al inicio */
+        }
+    
+        .buttons {
+            margin-bottom: 20px;
+        }
+    
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em; /* Ajusta tamaño del título en pantallas pequeñas */
+            }
+            button, input {
+                font-size: 1em; /* Ajusta tamaño de fuente para botones e inputs en pantallas pequeñas */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Guía Completa de Docker</h1>
+    
+    <div class="buttons">
+        <button id="showCommandsBtn">Ver Comandos de Docker</button>
+        <button id="showDocumentationBtn">Ver Documentación de Docker</button>
+        <button id="showTutorialBtn">Ver Guía Completa de Docker</button>
+    </div>
+
+    <div id="commandsSection" class="content">
+        <button id="backFromCommandsBtn" class="back-button">Volver a la Página Principal</button>
+        <input type="text" id="searchInput" placeholder="Buscar comandos...">
+        <table id="dockerTable">
+            <thead>
+                <tr>
+                    <th>Comando</th>
+                    <th>Descripción</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>docker stats</td>
+                    <td>Muestra uso de CPU, RAM y otros datos de consumo de cada contenedor activo.</td>
+                    <td>
+                        <div class="options">--format 'table' : Formato por defecto es 'table'.</div>
+                        <div class="options">--format 'json' : Cambia el formato a 'json'.</div>
+                        <div class="options">--no-stream : Muestra una única instantánea en lugar de un flujo continuo.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker cp &lt;nombre_o_ID&gt;:/ruta/del/archivo .</td>
+                    <td>Copia un archivo del contenedor a tu directorio local.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker pull &lt;imagen&gt;</td>
+                    <td>Descarga una imagen de Docker desde un registro (como Docker Hub).</td>
+                    <td>
+                        <div class="options">-a, --all-tags : Descarga todas las etiquetas de la imagen.</div>
+                        <div class="options">--disable-content-trust : Desactiva la verificación de firmas.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker run &lt;opciones&gt; &lt;imagen&gt;</td>
+                    <td>Crea un contenedor a partir de una imagen y lo ejecuta.</td>
+                    <td>
+                        <div class="options">-d, --detach : Ejecuta en segundo plano.</div>
+                        <div class="options">--name &lt;nombre&gt; : Asigna un nombre al contenedor.</div>
+                        <div class="options">-it : Interactivo con terminal.</div>
+                        <div class="options">-p &lt;puerto_host&gt;:&lt;puerto_contenedor&gt; : Mapea puertos.</div>
+                        <div class="options">-e &lt;VARIABLE=valor&gt; : Establece variables de entorno.</div>
+                        <div class="options">--rm : Elimina el contenedor al detenerlo.</div>
+                        <div class="options">--restart &lt;policy&gt; : Política de reinicio (always, unless-stopped, etc.).</div>
+                        <div class="options">--network &lt;red&gt; : Conecta el contenedor a una red específica.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker ps</td>
+                    <td>Muestra una lista de contenedores en ejecución.</td>
+                    <td>
+                        <div class="options">-a, --all : Muestra todos los contenedores (activos y detenidos).</div>
+                        <div class="options">-q, --quiet : Muestra solo los IDs de los contenedores.</div>
+                        <div class="options">--no-trunc : No trunca el texto de salida.</div>
+                        <div class="options">--filter &lt;filtro&gt; : Filtra resultados según ciertos criterios.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker images</td>
+                    <td>Lista las imágenes de Docker disponibles en tu sistema.</td>
+                    <td>
+                        <div class="options">-q : Muestra solo los IDs de las imágenes.</div>
+                        <div class="options">--digests : Muestra los resúmenes de las imágenes.</div>
+                        <div class="options">--no-trunc : No trunca la salida.</div>
+                        <div class="options">--filter &lt;filtro&gt; : Filtra imágenes según criterios específicos.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker rm &lt;contenedor&gt;</td>
+                    <td>Elimina uno o más contenedores.</td>
+                    <td>
+                        <div class="options">-f, --force : Fuerza la eliminación de contenedores en ejecución.</div>
+                        <div class="options">-v, --volumes : Elimina volúmenes asociados.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker rmi &lt;imagen&gt;</td>
+                    <td>Elimina una o más imágenes.</td>
+                    <td>
+                        <div class="options">-f, --force : Fuerza la eliminación.</div>
+                        <div class="options">--no-prune : No elimina imágenes no referenciadas.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker stop &lt;contenedor&gt;</td>
+                    <td>Detiene un contenedor en ejecución.</td>
+                    <td>
+                        <div class="options">-t &lt;segundos&gt; : Espera un tiempo específico antes de forzar la detención.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker start &lt;contenedor&gt;</td>
+                    <td>Inicia un contenedor detenido.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker restart &lt;contenedor&gt;</td>
+                    <td>Reinicia un contenedor en ejecución.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker logs &lt;contenedor&gt;</td>
+                    <td>Muestra los registros de salida de un contenedor.</td>
+                    <td>
+                        <div class="options">-f, --follow : Sigue los registros en tiempo real.</div>
+                        <div class="options">--tail &lt;n&gt; : Muestra solo las últimas &lt;n&gt; líneas.</div>
+                        <div class="options">--timestamps : Muestra marcas de tiempo.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker exec &lt;opciones&gt; &lt;contenedor&gt; &lt;comando&gt;</td>
+                    <td>Ejecuta un comando dentro de un contenedor en ejecución.</td>
+                    <td>
+                        <div class="options">-d, --detach : Ejecuta el comando en segundo plano.</div>
+                        <div class="options">-i, --interactive : Mantiene la entrada estándar abierta.</div>
+                        <div class="options">-t, --tty : Asigna un terminal virtual.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker build &lt;opciones&gt; &lt;ruta&gt;</td>
+                    <td>Construye una imagen de Docker a partir de un archivo Dockerfile y un contexto.</td>
+                    <td>
+                        <div class="options">--no-cache : No utiliza la caché de las capas anteriores.</div>
+                        <div class="options">-f &lt;Dockerfile&gt; : Especifica un Dockerfile alternativo.</div>
+                        <div class="options">--build-arg &lt;arg&gt;=&lt;valor&gt; : Establece argumentos de construcción.</div>
+                        <div class="options">-q, --quiet : Silencia la salida.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker image pull &lt;imagen&gt;</td>
+                    <td>Descarga una imagen desde un registro.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker image ls</td>
+                    <td>Lista imágenes en tu sistema.</td>
+                    <td>
+                        <div class="options">-q : Muestra solo los IDs de las imágenes.</div>
+                        <div class="options">--digests : Muestra los resúmenes de las imágenes.</div>
+                        <div class="options">--no-trunc : No trunca la salida.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker image rm &lt;imagen&gt;</td>
+                    <td>Elimina una o más imágenes.</td>
+                    <td>
+                        <div class="options">-f, --force : Fuerza la eliminación.</div>
+                        <div class="options">--no-prune : No elimina imágenes no referenciadas.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker image prune</td>
+                    <td>Elimina imágenes no utilizadas.</td>
+                    <td>
+                        <div class="options">-a, --all : Elimina todas las imágenes no utilizadas, no solo las "dangling".</div>
+                        <div class="options">--filter &lt;filter&gt; : Aplica filtros.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker container ls</td>
+                    <td>Lista contenedores en ejecución.</td>
+                    <td>
+                        <div class="options">-a, --all : Muestra todos los contenedores, incluyendo los detenidos.</div>
+                        <div class="options">-q, --quiet : Muestra solo los IDs de los contenedores.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker container rm &lt;contenedor&gt;</td>
+                    <td>Elimina uno o más contenedores.</td>
+                    <td>
+                        <div class="options">-f, --force : Fuerza la eliminación de contenedores en ejecución.</div>
+                        <div class="options">-v, --volumes : Elimina volúmenes asociados.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker container prune</td>
+                    <td>Elimina contenedores detenidos.</td>
+                    <td>
+                        <div class="options">--filter &lt;filter&gt; : Aplica filtros.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker container inspect &lt;contenedor&gt;</td>
+                    <td>Muestra información detallada sobre un contenedor.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker network ls</td>
+                    <td>Lista las redes de Docker en tu sistema.</td>
+                    <td>
+                        <div class="options">-q, --quiet : Muestra solo los IDs de las redes.</div>
+                        <div class="options">--filter &lt;filter&gt; : Aplica filtros.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker network create &lt;nombre&gt;</td>
+                    <td>Crea una nueva red de Docker.</td>
+                    <td>
+                        <div class="options">--driver &lt;controlador&gt; : Especifica el controlador de la red (bridge, host, overlay, etc.).</div>
+                        <div class="options">--subnet &lt;subred&gt; : Especifica la subred de la red.</div>
+                        <div class="options">--gateway &lt;puerta_de_enlace&gt; : Especifica la puerta de enlace de la red.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker network connect &lt;red&gt; &lt;contenedor&gt;</td>
+                    <td>Conecta un contenedor a una red.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker network disconnect &lt;red&gt; &lt;contenedor&gt;</td>
+                    <td>Desconecta un contenedor de una red.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker volume ls</td>
+                    <td>Lista los volúmenes de Docker en tu sistema.</td>
+                    <td>
+                        <div class="options">-q, --quiet : Muestra solo los IDs de los volúmenes.</div>
+                        <div class="options">--filter &lt;filter&gt; : Aplica filtros.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker volume create &lt;nombre&gt;</td>
+                    <td>Crea un nuevo volumen de Docker.</td>
+                    <td>
+                        <div class="options">--driver &lt;controlador&gt; : Especifica el controlador del volumen.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker volume inspect &lt;volumen&gt;</td>
+                    <td>Muestra información detallada sobre un volumen.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker compose up</td>
+                    <td>Inicia contenedores definidos en un archivo docker-compose.yml.</td>
+                    <td>
+                        <div class="options">-d, --detach : Ejecuta en segundo plano.</div>
+                        <div class="options">--build : Fuerza la reconstrucción de las imágenes.</div>
+                        <div class="options">--force-recreate : Fuerza la recreación de los contenedores.</div>
+                        <div class="options">--remove-orphans : Elimina contenedores huérfanos.</div>
+                        <div class="options">-p &lt;nombre&gt; : Personaliza el nombre del stack.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker compose down</td>
+                    <td>Detiene y elimina contenedores definidos en un archivo docker-compose.yml.</td>
+                    <td>
+                        <div class="options">-v, --volumes : Elimina volúmenes asociados.</div>
+                        <div class="options">--remove-orphans : Elimina contenedores huérfanos.</div>
+                        <div class="options">--rmi &lt;all|local&gt; : Elimina imágenes según el criterio especificado.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker compose logs</td>
+                    <td>Muestra los registros de contenedores definidos en un archivo docker-compose.yml.</td>
+                    <td>
+                        <div class="options">-f, --follow : Sigue los registros en tiempo real.</div>
+                        <div class="options">--tail &lt;n&gt; : Muestra solo las últimas &lt;n&gt; líneas.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker info</td>
+                    <td>Muestra información sobre la instalación de Docker.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker version</td>
+                    <td>Muestra la versión de Docker que está instalada.</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker inspect &lt;objeto&gt;</td>
+                    <td>Muestra información detallada sobre un objeto Docker (imagen, contenedor, volumen, red, etc.).</td>
+                    <td>Ninguna</td>
+                </tr>
+                <tr>
+                    <td>docker system prune</td>
+                    <td>Limpia recursos no utilizados.</td>
+                    <td>
+                        <div class="options">-a, --all : Elimina imágenes, contenedores y redes no utilizados.</div>
+                        <div class="options">--volumes : También elimina volúmenes no utilizados.</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>docker builder prune</td>
+                    <td>Limpia componentes de construcción, incluyendo imágenes intermedias.</td>
+                    <td>
+                        <div class="options">--all : Elimina todas las imágenes intermedias no referenciadas.</div>
+                        <div class="options">-f, --force : No pide confirmación antes de eliminar.</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    
+
+    <div id="documentationSection" class="content">
+        <button id="backFromDocsBtn" class="back-button">Volver a la Página Principal</button>
+        <h2>Documentación de Docker</h2>
+        <p>Para acceder a la documentación oficial de Docker, visita el siguiente enlace:</p>
+        <button id="openDockerDocsBtn">Ir a la Documentación de Docker</button>
+    </div>
+
+    <div id="tutorial" class="content">
+        <button id="backFromTutorialBtn" class="back-button">Volver a la Página Principal</button>
+        <h2>Guía Completa de Uso de Docker</h2>
+    
+        <h3>1. Introducción a Docker</h3>
+        <p>Docker es una plataforma que permite a los desarrolladores empaquetar aplicaciones y sus dependencias en contenedores. Un contenedor es una unidad estándar de software que empaqueta el código y todas sus dependencias para que la aplicación se ejecute rápidamente y de manera confiable en diferentes entornos de computación. Docker te permite crear, desplegar y ejecutar aplicaciones en contenedores, lo que mejora la eficiencia y la consistencia en el desarrollo y producción.</p>
+    
+        <h3>2. Instalación de Docker</h3>
+        <p>Para instalar Docker, sigue las instrucciones específicas para tu sistema operativo en la <a href="https://docs.docker.com/get-docker/" target="_blank" style="color: #4caf50;">documentación oficial de Docker</a>. Asegúrate de que tu sistema cumpla con los requisitos de instalación, que pueden variar según el sistema operativo.</p>
+        <ul>
+            <li><strong>Windows y Mac:</strong> Descarga Docker Desktop desde el sitio oficial y sigue las instrucciones de instalación.</li>
+            <li><strong>Linux:</strong> Utiliza el gestor de paquetes de tu distribución. Por ejemplo, en Ubuntu, puedes usar:
+                <pre><code>sudo apt update
+    sudo apt install docker.io
+    sudo systemctl start docker
+    sudo systemctl enable docker
+    sudo usermod -aG docker $USER</code></pre>
+            </li>
+        </ul>
+    
+        <h3>3. Conceptos Básicos</h3>
+        <ul>
+            <li><strong>Contenedor:</strong> Una instancia de una imagen Docker. Los contenedores son ligeros y se pueden ejecutar en cualquier entorno que soporte Docker.</li>
+            <li><strong>Imagen:</strong> Un paquete que contiene todo lo necesario para ejecutar una aplicación, incluyendo el código, las bibliotecas y las dependencias. Las imágenes son inmutables.</li>
+            <li><strong>Dockerfile:</strong> Un archivo de texto que contiene instrucciones para construir una imagen Docker. Las instrucciones son ejecutadas por Docker para crear una imagen.</li>
+            <li><strong>Docker Hub:</strong> Un servicio de registro en línea que permite almacenar y compartir imágenes Docker. Puedes subir tus propias imágenes o descargar imágenes públicas.</li>
+            <li><strong>Docker Compose:</strong> Una herramienta para definir y ejecutar aplicaciones Docker de múltiples contenedores utilizando un archivo YAML. Permite gestionar la configuración y los servicios de forma sencilla.</li>
+            <li><strong>Volumen:</strong> Un mecanismo para persistir datos generados y utilizados por contenedores. Los volúmenes permiten que los datos sobrevivan a los ciclos de vida de los contenedores.</li>
+            <li><strong>Redes:</strong> Docker permite crear redes personalizadas para conectar contenedores. Esto proporciona aislamiento y control sobre la comunicación entre contenedores.</li>
+        </ul>
+    
+        <h3>4. Comandos Comunes</h3>
+        <p>Algunos comandos esenciales para trabajar con Docker son:</p>
+        <ul>
+            <li><strong>docker pull:</strong> Descarga imágenes desde Docker Hub.</li>
+            <li><strong>docker run:</strong> Crea y ejecuta un nuevo contenedor.</li>
+            <li><strong>docker ps:</strong> Lista los contenedores en ejecución.</li>
+            <li><strong>docker stop:</strong> Detiene un contenedor en ejecución.</li>
+            <li><strong>docker rm:</strong> Elimina un contenedor.</li>
+            <li><strong>docker rmi:</strong> Elimina una imagen.</li>
+            <li><strong>docker build:</strong> Construye una imagen a partir de un Dockerfile.</li>
+            <li><strong>docker-compose up:</strong> Levanta los servicios definidos en un archivo docker-compose.yml.</li>
+            <li><strong>docker-compose down:</strong> Detiene y elimina los servicios y redes creados por docker-compose up.</li>
+        </ul>
+    
+        <h3>5. Estructura de un Proyecto Docker</h3>
+        <p>Para crear un proyecto Docker, es recomendable seguir una estructura de directorios organizada. A continuación se muestra un ejemplo:</p>
+        <pre><code>
+    mi_proyecto/
+    ├── Makefile
+    ├── .env
+    └── srcs/
+        ├── docker-compose.yml
+        ├── mariadb/
+        │   ├── Dockerfile
+        │   └── ...
+        ├── nginx/
+        │   ├── Dockerfile
+        │   └── ...
+        ├── wordpress/
+        │   ├── Dockerfile
+        │   └── ...
+        </code></pre>
+        <p>El archivo <code>Makefile</code> debe contener las instrucciones necesarias para construir y ejecutar tu proyecto utilizando Docker.</p>
+    
+        <h3>6. Creación de un Dockerfile</h3>
+        <p>Un <code>Dockerfile</code> es un archivo de texto que contiene las instrucciones para construir una imagen Docker. Aquí tienes un ejemplo básico para un servicio de NGINX:</p>
+        <pre><code>
+    # Usar la imagen base de NGINX
+    FROM nginx:alpine
+    
+    # Copiar archivos de configuración
+    COPY ./nginx.conf /etc/nginx/nginx.conf
+    
+    # Exponer el puerto 443
+    EXPOSE 443
+        </code></pre>
+    
+        <h3>7. Usando Docker Compose</h3>
+        <p>Docker Compose te permite definir y ejecutar aplicaciones que constan de múltiples contenedores. Un archivo <code>docker-compose.yml</code> puede parecerse a esto:</p>
+        <pre><code>
+    version: '3.7'
+    
+    services:
+      nginx:
+        build:
+          context: ./nginx
+        ports:
+          - "443:443"
+        volumes:
+          - ./nginx/conf:/etc/nginx/conf.d
+        restart: unless-stopped
+    
+      wordpress:
+        build:
+          context: ./wordpress
+        environment:
+          WORDPRESS_DB_HOST: mariadb
+          WORDPRESS_DB_USER: ${MYSQL_USER}
+          WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+        restart: unless-stopped
+    
+      mariadb:
+        image: mariadb:latest
+        environment:
+          MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+          MYSQL_DATABASE: wordpress
+          MYSQL_USER: ${MYSQL_USER}
+          MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        volumes:
+          - db_data:/var/lib/mysql
+        restart: unless-stopped
+    
+    volumes:
+      db_data:
+        </code></pre>
+    
+        <h3>8. Ejemplo de Uso</h3>
+        <p>Para ejecutar tu proyecto Docker, sigue estos pasos:</p>
+        <ol>
+            <li>Construye y levanta los servicios usando:</li>
+            <pre><code>docker-compose up --build</code></pre>
+            <li>Accede a tu aplicación a través del navegador en <code>https://localhost</code>.</li>
+        </ol>
+    
+        <h3>9. Buenas Prácticas</h3>
+        <ul>
+            <li>Evita almacenar contraseñas y secretos directamente en tus <code>Dockerfile</code> o en tu código fuente.</li>
+            <li>Utiliza un archivo <code>.env</code> para almacenar variables de entorno, como contraseñas y configuraciones específicas.</li>
+            <li>Utiliza volúmenes para persistir datos en contenedores, como bases de datos y archivos de aplicación.</li>
+            <li>Configura tus contenedores para que se reinicien automáticamente en caso de fallo.</li>
+            <li>Usa etiquetas en tus imágenes para mantener el control de versiones y facilitar la gestión de tus imágenes.</li>
+            <li>Comprime y optimiza tus imágenes Docker utilizando las mejores prácticas de construcción.</li>
+        </ul>
+    
+        <h3>10. Seguridad en Docker</h3>
+        <p>Es importante seguir buenas prácticas de seguridad al trabajar con Docker:</p>
+        <ul>
+            <li>Siempre utiliza imágenes oficiales y de confianza.</li>
+            <li>Mantén Docker y sus componentes actualizados.</li>
+            <li>Evita ejecutar contenedores como root siempre que sea posible. Utiliza usuarios no privilegiados dentro de los contenedores.</li>
+            <li>Utiliza Docker secrets para manejar credenciales de forma segura.</li>
+            <li>Monitorea y registra la actividad de los contenedores para detectar comportamientos anómalos.</li>
+        </ul>
+    
+        <h3>11. Configuración de Redes y Volúmenes</h3>
+        <p>Docker permite la creación de redes personalizadas y el uso de volúmenes para manejar datos persistentes. Aquí tienes cómo hacerlo:</p>
+        <pre><code>
+    # Crear una red personalizada
+    docker network create mi_red
+    
+    # Crear un volumen
+    docker volume create mi_volumen
+    
+    # Usar la red y el volumen en docker-compose.yml
+    version: '3.7'
+    
+    services:
+      mi_servicio:
+        image: mi_imagen
+        networks:
+          - mi_red
+        volumes:
+          - mi_volumen:/data
+    
+    networks:
+      mi_red:
+    
+    volumes:
+      mi_volumen:
+        </code></pre>
+    
+        <h3>12. Solución de Problemas Comunes</h3>
+        <p>Aquí hay algunos problemas comunes y sus soluciones al trabajar con Docker:</p>
+        <ul>
+            <li><strong>Contenedor no se inicia:</strong> Verifica los logs del contenedor con <code>docker logs &lt;nombre_o_id&gt;</code> y asegúrate de que no haya errores en la configuración.</li>
+            <li><strong>Problemas de red:</strong> Asegúrate de que los contenedores estén en la misma red y que estén correctamente configurados para comunicarse entre sí.</li>
+            <li><strong>Imágenes grandes:</strong> Revisa tu Dockerfile y utiliza <code>multi-stage builds</code> para optimizar el tamaño de las imágenes.</li>
+            <li><strong>Problemas de permisos:</strong> Si experimentas problemas de permisos, considera ejecutar contenedores con un usuario no root o ajusta los permisos de los volúmenes montados.</li>
+        </ul>
+    
+        <h3>13. Ejercicio Inception</h3>
+        <p>Para el ejercicio "Inception", aquí hay un resumen de los requisitos y algunos pasos clave:</p>
+        <ul>
+            <li>Crear un entorno de Docker que incluya NGINX, WordPress y MariaDB.</li>
+            <li>Escribir Dockerfiles para cada servicio y usar Docker Compose para orquestar los contenedores.</li>
+            <li>Configurar volúmenes para persistir datos, como bases de datos y archivos de WordPress.</li>
+            <li>Asegurarte de que los contenedores se reinicien automáticamente y que la configuración de red esté correctamente establecida.</li>
+            <li>Implementar TLSv1.2 o TLSv1.3 en el contenedor NGINX y asegurar que el acceso se realice a través del puerto 443.</li>
+        </ul>
+        <p>Consulta los requisitos específicos en el documento del proyecto y asegúrate de seguir todas las mejores prácticas de Docker.</p>
+    
+        <h3>14. Recursos Adicionales</h3>
+        <p>Para más información y detalles, visita la <a href="https://docs.docker.com/" target="_blank" style="color: #4caf50;">documentación oficial de Docker</a>, <a href="https://docs.docker.com/compose/" target="_blank" style="color: #4caf50;">Docker Compose</a> y otros recursos como libros, tutoriales y foros sobre Docker.</p>
+    </div>
+
+    <script>
+        const showCommandsBtn = document.getElementById('showCommandsBtn');
+        const showDocumentationBtn = document.getElementById('showDocumentationBtn');
+        const showTutorialBtn = document.getElementById('showTutorialBtn');
+        const commandsSection = document.getElementById('commandsSection');
+        const documentationSection = document.getElementById('documentationSection');
+        const tutorial = document.getElementById('tutorial');
+        const searchInput = document.getElementById('searchInput');
+        const dockerTable = document.getElementById('dockerTable');
+        const tableRows = dockerTable.getElementsByTagName('tr');
+        const openDockerDocsBtn = document.getElementById('openDockerDocsBtn');
+        const backFromDocsBtn = document.getElementById('backFromDocsBtn');
+        const backFromTutorialBtn = document.getElementById('backFromTutorialBtn');
+        const backFromCommandsBtn = document.getElementById('backFromCommandsBtn');
+    
+        // Función para mostrar el menú principal y ocultar todas las secciones
+        function showMainMenu() {
+            commandsSection.style.display = 'none';
+            documentationSection.style.display = 'none';
+            tutorial.style.display = 'none';
+            document.querySelector('.buttons').style.display = 'block'; // Muestra los botones del menú
+        }
+    
+        // Mostrar la sección de comandos
+        showCommandsBtn.addEventListener('click', function() {
+            commandsSection.style.display = 'block';
+            documentationSection.style.display = 'none';
+            tutorial.style.display = 'none'; // Oculta el tutorial
+            document.querySelector('.buttons').style.display = 'none'; // Oculta los botones del menú
+        });
+    
+        // Mostrar la sección de documentación
+        showDocumentationBtn.addEventListener('click', function() {
+            commandsSection.style.display = 'none';
+            documentationSection.style.display = 'block';
+            tutorial.style.display = 'none'; // Oculta el tutorial
+            document.querySelector('.buttons').style.display = 'none'; // Oculta los botones del menú
+        });
+    
+        // Mostrar la sección de tutorial
+        showTutorialBtn.addEventListener('click', function() {
+            commandsSection.style.display = 'none';
+            documentationSection.style.display = 'none';
+            tutorial.style.display = 'block'; // Muestra el tutorial
+            document.querySelector('.buttons').style.display = 'none'; // Oculta los botones del menú
+        });
+    
+        // Volver a la página principal
+        backFromDocsBtn.addEventListener('click', showMainMenu);
+        backFromTutorialBtn.addEventListener('click', showMainMenu);
+        backFromCommandsBtn.addEventListener('click', showMainMenu);
+    
+        // Mejora la funcionalidad de búsqueda
+        searchInput.addEventListener('input', function() {
+            const filter = searchInput.value.toLowerCase();
+            const regEx = new RegExp(filter, 'gi');
+    
+            for (let i = 1; i < tableRows.length; i++) {
+                const cells = tableRows[i].getElementsByTagName('td');
+                let rowVisible = false;
+    
+                for (let j = 0; j < cells.length; j++) {
+                    const cellText = cells[j].textContent.toLowerCase();
+                    if (cellText.match(regEx)) {
+                        rowVisible = true;
+                        // Resalta el texto que coincide con la búsqueda
+                        cells[j].innerHTML = cellText.replace(regEx, (match) => `<span class="highlight">${match}</span>`);
+                    } else {
+                        // Restaura el texto original si no coincide
+                        cells[j].innerHTML = cellText;
+                    }
+                }
+                tableRows[i].style.display = rowVisible ? '' : 'none'; // Muestra u oculta la fila
+            }
+        });
+    
+        // Abrir la documentación de Docker
+        openDockerDocsBtn.addEventListener('click', function() {
+            window.open("https://docs.docker.com/", "_blank");
+        });
+    </script>
+</body>
+</html>
